@@ -16,11 +16,10 @@ class ContractRentsController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
         $contract_rent = ContractRent::with('Client', 'Vehicle')
             ->where('id', '>', '0')
             ->paginate(10);
-        return view('admin.contract_rent.all', compact('contract_rent', 'brands'));
+        return view('admin.contract_rent.all', compact('contract_rent'));
     }
 
     /**

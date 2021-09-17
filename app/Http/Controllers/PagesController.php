@@ -22,9 +22,8 @@ class PagesController extends Controller
     public function index()
     {
         $vehicles = Vehicle::all();
-        $gallery = Gallery::all();
         $brands = Brand::all();
-        return view('index', compact('vehicles', 'gallery', 'brands'));
+        return view('index', compact('vehicles', 'brands'));
     }
 
 
@@ -73,7 +72,6 @@ class PagesController extends Controller
     public function special_offer()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
         $dt = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')
@@ -82,7 +80,6 @@ class PagesController extends Controller
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
             $edt = $offer->end_date;
             if ($edt < $dt) {
-
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
                 $vehicle->save();
@@ -92,13 +89,12 @@ class PagesController extends Controller
             ->where('has_offer', '=', '1')
             ->paginate(6);
 
-        return view('special_offer_cars', compact('vehicles', 'gallery', 'brands'));
+        return view('special_offer_cars', compact('vehicles', 'gallery'));
     }
 
     public function vehicle_listing()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
         $dt = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')
@@ -107,44 +103,41 @@ class PagesController extends Controller
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
             $edt = $offer->end_date;
             if ($edt < $dt) {
-
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
                 $vehicle->save();
             }
         }
         $vehicles = Vehicle::where('is_available', '=', '1')->paginate(6);
-        return view('vehicle_listing', compact('vehicles', 'gallery', 'brands'));
+        return view('vehicle_listing', compact('vehicles', 'gallery'));
     }
     public function vehicle_buy()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
         $vehicles = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '0')
             ->where('service_type', '=', 'buy')
             ->paginate(6);
-        return view('vehicle_buy', compact('vehicles', 'gallery', 'brands'));
+        return view('vehicle_buy', compact('vehicles', 'gallery'));
     }
     public function vehicle_rent()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
         $vehicles = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '0')
             ->where('service_type', '=', 'rent')
             ->paginate(6);
-        return view('vehicle_rent', compact('vehicles', 'gallery', 'brands'));
+        return view('vehicle_rent', compact('vehicles', 'gallery'));
     }
 
 
     public function special_buy()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
         $dt = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
-            ->where('has_offer', '=', '1')->paginate(6);
+            ->where('has_offer', '=', '1')
+            ->paginate(6);
         foreach ($veh as $vehicle) {
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
             $edt = $offer->end_date;
@@ -158,14 +151,12 @@ class PagesController extends Controller
             ->where('has_offer', '=', '1')
             ->where('service_type', '=', 'buy')
             ->paginate(6);
-        return view('special_buy', compact('vehicles', 'gallery', 'brands'));
+        return view('special_buy', compact('vehicles', 'gallery'));
     }
 
     public function special_rent()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
-
         $dt = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')->paginate(6);
@@ -173,10 +164,8 @@ class PagesController extends Controller
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
             $edt = $offer->end_date;
             if ($edt < $dt) {
-
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
-
                 $vehicle->save();
             }
         }
@@ -184,14 +173,14 @@ class PagesController extends Controller
             ->where('has_offer', '=', '1')
             ->where('service_type', '=', 'rent')
             ->paginate(6);
-        return view('special_rent', compact('vehicles', 'gallery', 'brands'));
+        return view('special_rent', compact('vehicles', 'gallery'));
     }
     public function vehicle_listing_detail($id)
     {
         $vehicle = Vehicle::where('id', '=', $id)->first();
         $gallery = Gallery::all();
-        $brands = Brand::all();
-        return view('vehicle_listing_detail', compact('vehicle', 'gallery', 'brands'));
+
+        return view('vehicle_listing_detail', compact('vehicle', 'gallery'));
     }
 
 
@@ -206,8 +195,8 @@ class PagesController extends Controller
             ->where('price_after_offer', '>', 0)
             ->paginate(6);
         $gallery = Gallery::all();
-        $brands = Brand::all();
-        return view('search', compact('vehicles', 'gallery', 'brands'));
+
+        return view('search', compact('vehicles', 'gallery'));
     }
 
 

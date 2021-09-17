@@ -36,12 +36,7 @@
                                                 <td>{{ $rent->client->first_name }}</td>
                                                 <td>{{ $rent->client->last_name }}</td>
                                                 <td>{{ $rent->Vehicle->id }} </td>
-                                                @foreach ($brands as $brand)
-                                                    @if ($brand->id == $rent->vehicle->brand_id)
-                                                        <td>{{ $brand->name }}</td>
-                                                    @endif
-                                                @endforeach
-
+                                                <td>{{ $rent->vehicle->brand->name }}</td>
                                                 <td>{{ $rent->Vehicle->price_after_offer }}</td>
                                                 <td>{{ $rent->start_date }}</td>
                                                 <td>{{ $rent->end_date }}</td>

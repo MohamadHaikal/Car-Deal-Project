@@ -48,17 +48,6 @@ Route::get('/add_favourite/{id}', 'PagesController@add_favourite')->name('add_fa
 
 
 
-Route::get('/owner/add', 'OwnersController@add')->name('add-owner');
-Route::post('/owner/store', 'OwnersController@store')->name('store-owner');
-Route::get('/owner/all', 'OwnersController@all')->name('all-owners');
-Route::get('/owner/edit/{id}', 'OwnersController@edit')->name('edit-owner');
-Route::post('/owner/edit/{id}', 'OwnersController@update')->name('update-owner');
-Route::get('/owner/delete/{id}', 'OwnersController@delete')->name('delete-owner');
-
-
-
-
-
 // BrandController Routs
 
 Route::get('/brand/add', 'BrandsController@create')->name('add-brand');

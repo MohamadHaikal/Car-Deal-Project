@@ -71,15 +71,13 @@
                         <!-- End Slider -->
 
                         <div class="content-wrap">
-                            @foreach ($brands as $brand)
-                                @if ($brand->id == $vehicle->brand_id)
+
                                     <h2>
 
-                                        About {{ $brand->name }} :
+                                        About {{ $vehicle->brand->name }} :
 
                                     </h2>
-                                @endif
-                            @endforeach
+
 
 
                             <blockquote class="generic-blockquote mt-3">
@@ -290,20 +288,18 @@
                         <hr class="line-separator">
 
                         <ul>
-                            @foreach ($brands as $brand)
-                                @if ($brand->id == $vehicle->brand_id)
-                                    <li><a class="justify-content-between align-items-center d-flex">
-                                            <h6>Brand:</h6> <span>
 
-                                                {{ $brand->name }}
+                            <li><a class="justify-content-between align-items-center d-flex">
+                                    <h6>Brand:</h6> <span>
 
-                                            </span>
-                                        </a></li>
-                                    <li><a class="justify-content-between align-items-center d-flex">
-                                            <h6>Model:</h6> <span>{{ $brand->model }} Series</span>
-                                        </a></li>
-                                @endif
-                            @endforeach
+                                        {{ $vehicle->brand->name }}
+
+                                    </span>
+                                </a></li>
+                            <li><a class="justify-content-between align-items-center d-flex">
+                                    <h6>Model:</h6> <span>{{ $vehicle->brand->model }} Series</span>
+                                </a></li>
+
                             <li><a class="justify-content-between align-items-center d-flex">
                                     <h6>Fuel:</h6> <span>{{ $vehicle->fuel }}</span>
                                 </a></li>

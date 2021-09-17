@@ -31,12 +31,7 @@
                                                 <th scope="row">{{ $log->id }}</th>
                                                 <td>{{ $log->action }}</td>
                                                 <td>{{ $log->vehicle_id }}</td>
-                                                @foreach ($brands as $brand)
-                                                    @if ($brand->id == $log->vehicle->brand_id)
-                                                        <td>{{ $brand->name }}</td>
-                                                    @endif
-                                                @endforeach
-
+                                                <td>{{ $log->vehicle->brand->name }}</td>
                                                 <td>{{ $log->client_id }} </td>
                                                 <td>{{ $log->client->username }}</td>
                                                 <td>{{ $log->date }}</td>

@@ -36,12 +36,7 @@
                                                 <td>{{ $buy->client->first_name }}</td>
                                                 <td>{{ $buy->client->last_name }}</td>
                                                 <td>{{ $buy->Vehicle->id }} </td>
-                                                @foreach ($brands as $brand)
-                                                    @if ($brand->id == $buy->vehicle->brand_id)
-                                                        <td>{{ $brand->name }}</td>
-                                                    @endif
-                                                @endforeach
-
+                                                <td>{{ $buy->vehicle->brand->name }}</td>
                                                 <td>{{ $buy->Vehicle->price_after_offer }}</td>
                                                 <td>{{ $buy->created_at }}</td>
 
@@ -66,4 +61,4 @@
 
         </div>
     </div>
-    @endsection
+@endsection

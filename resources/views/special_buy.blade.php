@@ -52,11 +52,9 @@
                     <ul class="gp_products_caption_name">
 
                         <li>
-                            @foreach ($brands as $brand)
-                                @if ($brand->id == $vehicle->brand_id)
-                                    <a>{{ $brand->name }} {{ $brand->model }}</a>
-                                @endif
-                            @endforeach
+
+                                    <a>{{ $vehicle->brand->name }} {{ $vehicle->brand->model }}</a>
+
                             @if ($vehicle->has_offer == 0)
 
                                 <a href="#" class="pull-right">{{ $vehicle->price }}<span class="mr-1">

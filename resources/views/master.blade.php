@@ -186,8 +186,8 @@
                     <div class="single-footer-widget">
                         <h6>Useful Links</h6>
                         <ul class="footer-nav">
-                            <li><a href="{{ route('sign-in') }}">LogIn</a></li>
-                            <li><a href="{{ route('sign-up') }}">signUp</a></li>
+                            <li><a href="{{ route('login') }}">LogIn</a></li>
+                            <li><a href="{{ route('register') }}">signUp</a></li>
                             <li><a href="{{ route('change-password') }}">Change</a></li>
                             <li><a href="{{ route('contact') }}">Contact Us</a></li>
 

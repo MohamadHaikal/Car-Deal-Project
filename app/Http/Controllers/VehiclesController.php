@@ -18,10 +18,9 @@ class VehiclesController extends Controller
      */
     public function index()
     {
-        $vehicle = Vehicle::all();
-        $brands = Brand::all();
-        $offers = SpecialOffer::all();
-        return view('admin.vehicle.all', compact('vehicle','brands','offers'));
+        $vehicle = Vehicle::with('Brand', 'SpecialOffer')->where('id', '>', '0')
+        ->paginate(6);
+        return view('admin.vehicle.all', compact('vehicle'));
     }
 
     /**

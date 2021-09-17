@@ -17,11 +17,10 @@ class LogController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
         $logs = Log::with('Client', 'Vehicle')
             ->where('id', '>', '0')
             ->paginate(10);
-        return view('admin.log.all', compact('logs', 'brands'));
+        return view('admin.log.all', compact('logs'));
     }
 
     /**
