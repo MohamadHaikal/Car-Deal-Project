@@ -59,7 +59,7 @@ class RequestsTableController extends Controller
                 'vehicle_id' => $id,
                 'request_table_id' => $req->id,
             ]);
-            return redirect()->back()->with('success', 'Order sended successfully.');
+            return redirect()->back()->with('success', 'request sended successfully.');
         }
     }
 
@@ -93,7 +93,7 @@ class RequestsTableController extends Controller
                 'vehicle_id' => $id,
                 'request_table_id' => $req->id,
             ]);
-            return redirect()->back()->with('success', 'Order sended successfully.');
+            return redirect()->back()->with('success', 'request sended successfully.');
         }
     }
 
