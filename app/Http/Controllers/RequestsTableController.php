@@ -22,9 +22,9 @@ class RequestsTableController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
     public function index()
     {
+        //return  all request page
         $brands = Brand::all();
         $request_table = RequestTable::with('Client', 'Vehicle')
             ->where('id', '>', '0')
@@ -39,11 +39,11 @@ class RequestsTableController extends Controller
     {
         $exists = RequestTable::where('client_id', '=', Auth::guard('client')->user()->id)
             ->where('vehicle_id', '=', $id)->first();
+        //if request sent recently
         if ($exists) {
             return back();
         } else {
             $vehicle = vehicle::where('id', '=', $id)->first();
-            // validation vehicle id.
 
             RequestTable::create([
                 'date'       => now()->toDateString(),
@@ -68,12 +68,13 @@ class RequestsTableController extends Controller
     {
         $exists = RequestTable::where('client_id', '=', Auth::guard('client')->user()->id)
             ->where('vehicle_id', '=', $id)->first();
+        //if request sent recently
         if ($exists) {
             return back();
         } else {
-            $vehicle = vehicle::where('id', '=', $id)->first();
-            // validation vehicle id.
 
+            $vehicle = vehicle::where('id', '=', $id)->first();
+            //store request info
             RequestTable::create([
                 'date'       => now()->toDateString(),
                 'type'       => $vehicle->service_type,
@@ -85,6 +86,7 @@ class RequestsTableController extends Controller
 
             $req = RequestTable::where('client_id', '=', Auth::guard('client')->user()->id)
                 ->where('vehicle_id', '=', $id)->first();
+            //store report info
             ReportStatus::create([
                 'date'       => now()->toDateString(),
                 'client_id'  => Auth::guard('client')->user()->id,
@@ -101,11 +103,13 @@ class RequestsTableController extends Controller
     public function decline($id)
     {
         $status = ReportStatus::where('request_table_id', '=', $id)->first();
-
+        // feedback to client if request decline
         $rstatus = ReportStatus::find($status->id);
         $rstatus->status = 'unacceptable';
         $rstatus->save();
         $request = RequestTable::where('id', '=', $id)->first();
+
+        //add action to log record
         $log = new Log;
         $log->client_id = $request->client_id;
         $log->vehicle_id = $request->vehicle_id;
@@ -117,22 +121,27 @@ class RequestsTableController extends Controller
     }
 
     public function Accept($id)
-    {
+    {   // feedback to client if request accept
         $status = ReportStatus::where('request_table_id', '=', $id)->first();
         $rstatus = ReportStatus::find($status->id);
         $rstatus->status = 'acceptable';
         $rstatus->save();
+
         $request = RequestTable::where('id', '=', $id)->first();
         $vehicle = vehicle::find($request->vehicle_id);
+        // make vehicle not avalable
         $vehicle->is_available = 0;
         $requests = RequestTable::where('vehicle_id', '=', $request->vehicle_id)->get();
         $client = Client::find($request->client_id);
+        // if request buy
         if ($vehicle->service_type == "buy") {
             $cbuy = new ContractBuy;
             $cbuy->date = now()->toDateString();
             $cbuy->client_id = $client->id;
             $cbuy->vehicle_id = $vehicle->id;
             $cbuy->save();
+
+            //add action to log record
             $log = new Log;
             $log->client_id = $request->client_id;
             $log->vehicle_id = $request->vehicle_id;
@@ -140,6 +149,7 @@ class RequestsTableController extends Controller
             $log->action = "Request Buy Accepted";
             $log->save();
         }
+        //if request rent
         if ($vehicle->service_type == "rent") {
             $cbuy = new ContractRent;
             $cbuy->client_id = $client->id;
@@ -147,6 +157,8 @@ class RequestsTableController extends Controller
             $cbuy->start_date = $request->start_date;
             $cbuy->end_date = $request->end_date;
             $cbuy->save();
+
+            //add action to log record
             $log = new Log;
             $log->client_id = $request->client_id;
             $log->vehicle_id = $request->vehicle_id;
@@ -159,12 +171,16 @@ class RequestsTableController extends Controller
             $status = ReportStatus::where('vehicle_id', '=', $request->vehicle_id)
                 ->where('client_id', '!=', $request->client_id)
                 ->get();
+
+            // Notify other client that their requests have been rejected
             foreach ($status as $st) {
                 $rstatus = ReportStatus::find($st->id);
                 $rstatus->status = 'unacceptable';
                 $rstatus->save();
             }
+
             if ($req->client_id != $request->client_id) {
+                //add action to log record
                 $log = new Log;
                 $log->client_id = $req->client_id;
                 $log->vehicle_id = $req->vehicle_id;

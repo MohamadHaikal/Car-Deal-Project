@@ -16,6 +16,7 @@ class ContractRentsController extends Controller
      */
     public function index()
     {
+        //return contract rent page
         $contract_rent = ContractRent::with('Client', 'Vehicle')
             ->where('id', '>', '0')
             ->paginate(10);

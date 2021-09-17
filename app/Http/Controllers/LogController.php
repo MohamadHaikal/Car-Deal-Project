@@ -17,6 +17,7 @@ class LogController extends Controller
      */
     public function index()
     {
+        //return log record page
         $logs = Log::with('Client', 'Vehicle')
             ->where('id', '>', '0')
             ->paginate(10);

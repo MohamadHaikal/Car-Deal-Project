@@ -23,8 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // VehicleController Api's
 Route::resource('vehicles','VehiclesController');
 
-// ClientController Api's
-Route::resource('clients','ClientsController');
 
 // BrandController Api's
 Route::resource('brands','BrandsController');

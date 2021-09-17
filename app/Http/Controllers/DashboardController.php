@@ -14,6 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        //return dashboard page
         return view('layouts.dashboard');
     }
 

@@ -20,63 +20,25 @@ class PagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   //main site page
         $vehicles = Vehicle::all();
         $brands = Brand::all();
         return view('index', compact('vehicles', 'brands'));
     }
 
-
-    public function about_us()
-    {
-        return view('about_us');
-    }
-
-    public function change_password()
-    {
-        return view('change_password');
-    }
-
-    public function contact()
-    {
-        return view('contact');
-    }
-
-    public function favourite_car()
-    {
-        $gallery = Gallery::all();
-        $favourite = ClientVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
-            ->paginate(6);
-        return view('favourite_car', compact('gallery', 'favourite'));
-    }
-
-    public function add_favourite($id)
-    {
-        $favo = ClientVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
-            ->where('vehicle_id', '=', $id)
-            ->first();
-        if ($favo) {
-            return back();
-        } else {
-            $fav = new ClientVehicle;
-            $fav->client_id = Auth::guard('client')->user()->id;
-            $fav->vehicle_id = $id;
-            $fav->save();
-            return back();
-        }
-    }
-
     public function special_offer()
     {
         $gallery = Gallery::all();
-        $dt = now()->toDateString();
+        $NowDate = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')
             ->paginate(6);
         foreach ($veh as $vehicle) {
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
-            $edt = $offer->end_date;
-            if ($edt < $dt) {
+            $EndDate = $offer->end_date;
+            // check if special offer expired
+            if ($EndDate < $NowDate) {
+                //remove vehicle from offer page
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
                 $vehicle->save();
@@ -92,14 +54,16 @@ class PagesController extends Controller
     public function vehicle_listing()
     {
         $gallery = Gallery::all();
-        $dt = now()->toDateString();
+        $NowDate = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')
             ->paginate(6);
         foreach ($veh as $vehicle) {
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
-            $edt = $offer->end_date;
-            if ($edt < $dt) {
+            $EndDate = $offer->end_date;
+            // check if special offer expired
+            if ($EndDate < $NowDate) {
+                //remove vehicle from offer page
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
                 $vehicle->save();
@@ -109,7 +73,7 @@ class PagesController extends Controller
         return view('vehicle_listing', compact('vehicles', 'gallery'));
     }
     public function vehicle_buy()
-    {
+    {    //return all vehicle for buy
         $gallery = Gallery::all();
         $vehicles = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '0')
@@ -118,7 +82,7 @@ class PagesController extends Controller
         return view('vehicle_buy', compact('vehicles', 'gallery'));
     }
     public function vehicle_rent()
-    {
+    {   //return all vehicle for rent
         $gallery = Gallery::all();
         $vehicles = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '0')
@@ -131,14 +95,16 @@ class PagesController extends Controller
     public function special_buy()
     {
         $gallery = Gallery::all();
-        $dt = now()->toDateString();
+        $NowDate = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')
             ->paginate(6);
         foreach ($veh as $vehicle) {
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
-            $edt = $offer->end_date;
-            if ($edt < $dt) {
+            $EndDate = $offer->end_date;
+            // check if special offer expired
+            if ($EndDate < $NowDate) {
+                //remove vehicle from offer page
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
                 $vehicle->save();
@@ -154,13 +120,15 @@ class PagesController extends Controller
     public function special_rent()
     {
         $gallery = Gallery::all();
-        $dt = now()->toDateString();
+        $NowDate = now()->toDateString();
         $veh = Vehicle::where('is_available', '=', '1')
             ->where('has_offer', '=', '1')->paginate(6);
         foreach ($veh as $vehicle) {
             $offer = SpecialOffer::where('id', '=', $vehicle->special_offer_id)->first();
-            $edt = $offer->end_date;
-            if ($edt < $dt) {
+            $EndDate = $offer->end_date;
+            // check if special offer expired
+            if ($EndDate < $NowDate) {
+                //remove vehicle from offer page
                 $vehicle->price_after_offer = $vehicle->price;
                 $vehicle->has_offer = 0;
                 $vehicle->save();
@@ -172,8 +140,9 @@ class PagesController extends Controller
             ->paginate(6);
         return view('special_rent', compact('vehicles', 'gallery'));
     }
+
     public function vehicle_listing_detail($id)
-    {
+    {   //vehicle details page
         $vehicle = Vehicle::where('id', '=', $id)->first();
         $gallery = Gallery::all();
 
@@ -196,20 +165,47 @@ class PagesController extends Controller
         return view('search', compact('vehicles', 'gallery'));
     }
 
-
-    public function shopping_cart()
-    {
-        return view('shopping_cart');
+    public function favourite_car()
+    {   //return all favourite car for client
+        $gallery = Gallery::all();
+        $favourite = ClientVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
+            ->paginate(6);
+        return view('favourite_car', compact('gallery', 'favourite'));
     }
 
-    public function sign_in()
+    public function add_favourite($id)
     {
-        return view('signin');
+        $favourite = ClientVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
+            ->where('vehicle_id', '=', $id)
+            ->first();
+        //check if vehicle exists
+        if ($favourite) {
+            return back();
+        }
+        //add vehicle to favourite
+        else {
+
+            $fav = new ClientVehicle;
+            $fav->client_id = Auth::guard('client')->user()->id;
+            $fav->vehicle_id = $id;
+            $fav->save();
+            return back();
+        }
     }
 
-    public function sign_up()
+    public function about_us()
     {
-        return view('signup');
+        return view('about_us');
+    }
+
+    public function change_password()
+    {
+        return view('change_password');
+    }
+
+    public function contact()
+    {
+        return view('contact');
     }
 
     public function terms_and_conditions()

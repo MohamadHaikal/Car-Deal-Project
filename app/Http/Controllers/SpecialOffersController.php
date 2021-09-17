@@ -16,6 +16,7 @@ class SpecialOffersController extends Controller
      */
     public function index()
     {
+        //return all special offer page
         $special_offer = SpecialOffer::all();
         return view('admin.special_offer.all', compact('special_offer'));
     }
@@ -27,6 +28,7 @@ class SpecialOffersController extends Controller
      */
     public function create()
     {
+        //return add page
         return view('admin.special_offer.add');
     }
 
@@ -38,6 +40,7 @@ class SpecialOffersController extends Controller
      */
     public function store(Request $request)
     {
+        // store special offer info
         $special_offer = new SpecialOffer;
         $special_offer->fill($request->all());
         $special_offer->save();
@@ -66,6 +69,7 @@ class SpecialOffersController extends Controller
      */
     public function edit($id)
     {
+        //return update page
         $special_offer = SpecialOffer::where('id', '=', $id)->first();
         return view('admin.special_offer.edit', compact('special_offer'));
     }
@@ -79,6 +83,7 @@ class SpecialOffersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //update special offer info
         $special_offer = SpecialOffer::find($id);
         $special_offer->description = $request->description;
         $special_offer->ratio = $request->ratio;
@@ -97,6 +102,7 @@ class SpecialOffersController extends Controller
      */
     public function destroy($id)
     {
+        //delete special offer
         $special_offer = SpecialOffer::find($id);
         $special_offer->delete();
         return redirect('/offer/all');

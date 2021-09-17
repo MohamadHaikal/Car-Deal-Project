@@ -14,9 +14,9 @@ class BrandsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
-    {
 
+    public function index()
+    {   //display all brand
         $brand = Brand::all();
         return view('admin.brand.all', compact('brand'));
     }
@@ -29,10 +29,10 @@ class BrandsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
     public function create()
-    {
-        $brand = Brand::all();
-        return view('admin.brand.add', compact('brand'));
+    {   //return add brand page
+        return view('admin.brand.add');
     }
 
 
@@ -43,15 +43,20 @@ class BrandsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $brand = new Brand;
+
+        //store brand info
         $brand->name = $request->name;
         $brand->model = $request->model;
         $logo = time() . '.' . $request->file('logo')->getClientOriginalExtension();
         $request->logo->move(public_path('Uploaded/image/brand'), $logo);
         $brand->logo = $logo;
+
         $brand->save();
+
         return redirect('brand/all');
     }
 
@@ -74,7 +79,7 @@ class BrandsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   //return edit brand page
         $brand = Brand::where('id', '=', $id)->first();
         return view('admin.brand.edit', compact('brand'));
     }
@@ -108,7 +113,7 @@ class BrandsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   //delete brand
         $brand = Brand::find($id);
         $brand->delete();
         return redirect('/brand/all');
