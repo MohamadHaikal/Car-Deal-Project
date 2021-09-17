@@ -13,7 +13,8 @@
                     </h1>
                     <p class="text-white link-nav"><a href="\">Home </a> <span class="lnr lnr-arrow-right"></span> <a
                             href="{{ route('vehicle-listing') }}"> Vehicle </a> <span class="lnr lnr-arrow-right"></span>
-                        <a href="javascript:void(0)"> Favorite Car List</a></p>
+                        <a href="javascript:void(0)"> Favorite Car List</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -33,71 +34,64 @@
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center mb-30">
-                    @foreach ($favo as $f)
+                    @foreach ($favourite as $f)
 
+                        <div class="col-md-4 col-sm-6 col-12 gp_products_item">
+                            <div class="gp_products_inner">
+                                <div class="gp_products_item_image">
+                                    <a href="#">
+                                        @foreach ($gallery as $image)
+                                            @if ($image->vehicle_id == $f->vehicle->id)
+                                                <img src="Uploaded/image/{{ $image->image }}" alt="gp product 001" />
+                                            @break;
+                                        @endif
 
-                        @foreach ($vehicles as $vehicle)
-                            @if ($vehicle->id == $f->vehicle_id)
-
-
-                                <div class="col-md-4 col-sm-6 col-12 gp_products_item">
-                                    <div class="gp_products_inner">
-                                        <div class="gp_products_item_image">
-                                            <a href="#">
-                                                @foreach ($gallery as $image)
-                                                    @if ($image->vehicle_id == $vehicle->id)
-                                                        <img src="Uploaded/image/{{ $image->image }}"
-                                                            alt="gp product 001" />
-                                                    @break;
-                                                @endif
-
-                            @endforeach
-                            </a>
+                    @endforeach
+                    </a>
                 </div>
                 <div class="gp_products_item_caption">
                     <ul class="gp_products_caption_name">
 
                         <li>
-                            @foreach ($brands as $brand)
-                                @if ($brand->id == $vehicle->brand_id)
-                                    <a>{{ $brand->name }} {{ $brand->model }}</a>
-                                @endif
-                            @endforeach
-                            @if ($vehicle->has_offer == 0)
 
-                                <a href="#" class="pull-right">{{ $vehicle->price }}<span class="mr-1">
+                            <a>{{ $f->vehicle->brand->name }} {{ $f->vehicle->brand->model }}</a>
+
+                            @if ($f->vehicle->has_offer == 0)
+
+                                <a href="#" class="pull-right">{{ $f->vehicle->price }}<span class="mr-1">
                                         S.P</span></a>
 
                             @else
 
-                                <a href="#" class="pull-right"><s>{{ $vehicle->price }}<span class="mr-1">
+                                <a href="#" class="pull-right"><s>{{ $f->vehicle->price }}<span
+                                            class="mr-1">
                                             S.P</span></a> </s>
                                 <br>
                                 <a href="#" class="pull-right"
-                                    style=" color:red;">{{ $vehicle->price_after_offer }}<span class="mr-1"
+                                    style=" color:red;">{{ $f->vehicle->price_after_offer }}<span class="mr-1"
                                         style=" color:red;"> S.P</span></a>
 
 
                             @endif
 
                         </li>
-                        <li><a href="#">Model {{ $vehicle->year }} , </a>
+                        <li><a href="#">Model {{ $f->vehicle->year }} , </a>
                             <a href="#" class="___class_+?29___"><i
-                                    class="fa fa-map-marker mr-1"></i>{{ $vehicle->origin_country }}</a>
+                                    class="fa fa-map-marker mr-1"></i>{{ $f->vehicle->origin_country }}</a>
                         </li>
                         <li>
-                        <li><a href="#"><i class="fa fa-road mr-1"></i>{{ $vehicle->kilometrage }} Km</a>
+                        <li><a href="#"><i class="fa fa-road mr-1"></i>{{ $f->vehicle->kilometrage }} Km</a>
                             <a class="ml-2" href="#"><i
-                                    class="fa fa-tachometer mr-1"></i>{{ $vehicle->max_speed }} Miles</a>
-                            <a class="ml-2" href="#"><i class="fa fa-car mr-1"></i>{{ $vehicle->fuel }}</a>
+                                    class="fa fa-tachometer mr-1"></i>{{ $f->vehicle->max_speed }} Miles</a>
+                            <a class="ml-2" href="#"><i class="fa fa-car mr-1"></i>{{ $f->vehicle->fuel }}</a>
                             <a class="ml-2" href="#"> <span class="label label-danger"
-                                    style=" font-size: 10px;">{{ $vehicle->status }}</span></a>
+                                    style=" font-size: 10px;">{{ $f->vehicle->status }}</span></a>
 
                         </li>
                     </ul>
                     <ul class="gp_products_caption_rating mt-2">
                         <li class="___class_+?39___"><a class="___class_+?40___"
-                                href="{{ route('vehicle-listing-detail', [$vehicle->id]) }}">book now</a></li>
+                                href="{{ route('vehicle-listing-detail', [$f->vehicle->id]) }}">book now</a></li>
                         <li class="pull-right"><i class="fa fa-star-half-o"></i></li>
                         <li class="pull-right"><i class="fa fa-star"></i></li>
                         <li class="pull-right"><i class="fa fa-star"></i></li>
@@ -108,8 +102,7 @@
                 </div>
             </div>
         </div>
-        @endif
-        @endforeach
+
         @endforeach
 
     </div>
@@ -119,7 +112,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 mt-30">
             <nav aria-label="...">
                 <ul class="pagination justify-content-center">
-                    {{ $vehicles->links() }}
+                    {{ $favourite->links() }}
                 </ul>
             </nav>
         </div>

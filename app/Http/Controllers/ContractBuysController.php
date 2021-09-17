@@ -19,6 +19,7 @@ class ContractBuysController extends Controller
         $contract_buy = ContractBuy::with('Client', 'Vehicle')
             ->where('id', '>', '0')
             ->paginate(10);
+           
         return view('admin.contract_buy.all', compact('contract_buy'));
     }
 

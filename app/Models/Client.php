@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Client extends Authenticatable
 {
     use Notifiable;
-    
+
     protected $table = 'clients';
 
     protected $fillable =[
@@ -17,7 +17,7 @@ class Client extends Authenticatable
         "last_name",
         "username",
         "email",
-        "password", 
+        "password",
         "phone",
         "address",
         "photo",];
@@ -50,8 +50,5 @@ class Client extends Authenticatable
         }
 
 
-        //////////////// Belongs_To_Many Relations ////////////////
-        public function vehicles(){
-            return $this->belongsToMany('App\Vehicle', 'favorite_vehicles', 'vehicle_id', 'client_id')->withTimestamps();
-        }
+      
 }

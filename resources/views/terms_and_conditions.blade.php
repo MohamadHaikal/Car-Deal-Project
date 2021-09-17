@@ -10,7 +10,7 @@
                     <h1 class="text-white">
                         Terms And Conditions Page
                     </h1>
-                    <p class="text-white link-nav mt-3"><a href="index.html">Return To Home Page </a> <span
+                    <p class="text-white link-nav mt-3"><a href="/">Return To Home Page </a> <span
                             class="lnr lnr-arrow-right"></span></p>
                 </div>
             </div>

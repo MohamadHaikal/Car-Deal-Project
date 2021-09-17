@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use App\Models\Client;
 use App\Models\Vehicle;
 
-class CreateFavoriteVehiclesTable extends Migration
+class CreateClientVehiclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateFavoriteVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_vehicles', function (Blueprint $table) {
+        Schema::create('client_vehicles', function (Blueprint $table) {
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->bigInteger('vehicle_id')->unsigned();
@@ -32,6 +32,6 @@ class CreateFavoriteVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_vehicles');
+        Schema::dropIfExists('client_vehicles');
     }
 }

@@ -23,7 +23,7 @@ class Vehicle extends Model
         "exterior_color",
         "interior_color",
         "year",
-        "body", 
+        "body",
         "service_type",
         "rating_id",
         "brand_id",
@@ -69,8 +69,6 @@ class Vehicle extends Model
         }
 
 
-        ////////////// Belongs_To_Many Relations ////////////////
-        public function clients(){
-            return $this->belongsToMany('App\Client', 'favorite_vehicles', 'client_id', 'vehicle_id')->withTimestamps();
-        }
+      
+
 }

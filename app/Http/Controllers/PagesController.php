@@ -9,7 +9,7 @@ use App\Models\Gallery;
 use App\Models\Brand;
 use App\Models\SpecialOffer;
 use App\Models\ReportStatus;
-use App\Models\FavoriteVehicle;
+use App\Models\ClientVehicle;
 use Auth;
 
 class PagesController extends Controller
@@ -45,23 +45,20 @@ class PagesController extends Controller
     public function favourite_car()
     {
         $gallery = Gallery::all();
-        $brands = Brand::all();
-        $favo = FavoriteVehicle::where('client_id', '=', Auth::guard('client')->user()->id)->get();
-        $vehicles = Vehicle::where('is_available', '=', '1')
-            ->paginate(15);
-
-        return view('favourite_car', compact('vehicles', 'gallery', 'brands', 'favo'));
+        $favourite = ClientVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
+            ->paginate(6);
+        return view('favourite_car', compact('gallery', 'favourite'));
     }
 
     public function add_favourite($id)
     {
-        $favo = FavoriteVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
+        $favo = ClientVehicle::where('client_id', '=', Auth::guard('client')->user()->id)
             ->where('vehicle_id', '=', $id)
             ->first();
         if ($favo) {
             return back();
         } else {
-            $fav = new FavoriteVehicle;
+            $fav = new ClientVehicle;
             $fav->client_id = Auth::guard('client')->user()->id;
             $fav->vehicle_id = $id;
             $fav->save();
