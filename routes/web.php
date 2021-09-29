@@ -24,7 +24,7 @@ Route::get('/', 'PagesController@index')->name('hom');
 Route::get('/about_us', 'PagesController@about_us')->name('about-us');
 Route::get('/change_password', 'PagesController@change_password')->name('change-password');
 Route::get('/contact', 'PagesController@contact')->name('contact');
-Route::get('/favourite_car', 'PagesController@favourite_car')->name('favourite-car');
+Route::get('/favourite_car', 'PagesController@favourite_car')->name('favourite-car')->middleware('auth:client');
 Route::get('/privacy_policy', 'PagesController@privacy_policy')->name('privacy-policy');
 Route::get('/vehicle_listing', 'PagesController@vehicle_listing')->name('vehicle-listing');
 Route::get('/special_offer', 'PagesController@special_offer')->name('special_offer');
