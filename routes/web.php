@@ -29,7 +29,7 @@ Route::get('/privacy_policy', 'PagesController@privacy_policy')->name('privacy-p
 Route::get('/vehicle_listing', 'PagesController@vehicle_listing')->name('vehicle-listing');
 Route::get('/special_offer', 'PagesController@special_offer')->name('special_offer');
 Route::get('/vehicle_listing_detail/{id}', 'PagesController@vehicle_listing_detail')->name('vehicle-listing-detail');
-Route::get('/report_of_requests', 'PagesController@report_of_requests')->name('report_of_requests');
+Route::get('/report_of_requests', 'PagesController@report_of_requests')->name('report_of_requests')->middleware('auth:client');
 Route::get('/sign_in', 'PagesController@sign_in')->name('sign-in');
 Route::get('/sign_up', 'PagesController@sign_up')->name('sign-up');
 Route::get('/terms_and_conditions', 'PagesController@terms_and_conditions')->name('terms-and-conditions');
