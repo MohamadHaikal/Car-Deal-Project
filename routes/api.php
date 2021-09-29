@@ -25,7 +25,7 @@ Route::resource('vehicles','VehiclesController');
 
 
 // BrandController Api's
-Route::resource('brands','BrandsController');
+Route::get('/brands','BrandsController@show');
 
 // SpecialOfferController Api's
 Route::resource('special_offers','SpecialOffersController');

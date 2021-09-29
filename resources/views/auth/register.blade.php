@@ -6,22 +6,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->
-  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" />
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.css')}}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/icon-font.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/icon-font.min.css')}}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/animate.min.css')}}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/hamburgers.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/hamburgers.min.css')}}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/select2.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/select2.min.css')}}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="css/util.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/util.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
   <link href="https://fonts.googleapis.com/css?family=Mina" rel="stylesheet">
   <!--===============================================================================================-->
 </head>
@@ -206,14 +206,14 @@
 
 
   <!--===============================================================================================-->
-  <script src="js/vendor/jquery-2.2.4.min.js"></script>
+  <script src="{{asset('js/vendor/jquery-2.2.4.min.js')}}"></script>
   <!--===============================================================================================-->
-  <script src="js/popper.js"></script>
-  <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="{{asset('js/popper.js')}}"></script>
+  <script src="{{asset('js/vendor/bootstrap.min.js')}}"></script>
   <!--===============================================================================================-->
-  <script src="js/select2.min.js"></script>
+  <script src="{{asset('js/select2.min.js')}}"></script>
   <!--===============================================================================================-->
-  <script src="js/main.js"></script>
+  <script src="{{asset('js/main.js')}}"></script>
 
 </body>
 
